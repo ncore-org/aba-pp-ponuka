@@ -1,16 +1,24 @@
-import { defineConfig } from "@tanstack/react-start/config";
-import tsConfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import tsConfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
-  server: {
-    entry: "server",
-    preset: "static",
-  },
-  vite: {
-    plugins: [
-      tailwindcss(),
-      tsConfigPaths(),
-    ],
-  },
+  plugins: [
+    tanstackStart({
+      server: {
+        entry: "server",
+        preset: "static",
+      },
+      prerender: {
+        enabled: true,
+        autoSubfolderIndex: true,
+        failOnError: false,
+      },
+    }),
+    viteReact(),
+    tailwindcss(),
+    tsConfigPaths(),
+  ],
 });
