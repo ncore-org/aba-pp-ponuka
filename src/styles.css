@@ -1,0 +1,122 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-telekom: var(--telekom);
+  --color-orange: var(--orange);
+  --color-o2: var(--o2);
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 1rem;
+  --background: oklch(0.14 0.01 260);
+  --foreground: oklch(0.98 0.005 90);
+  --card: oklch(0.19 0.012 260);
+  --card-foreground: oklch(0.98 0.005 90);
+  --muted: oklch(0.24 0.012 260);
+  --muted-foreground: oklch(0.7 0.015 260);
+  --primary: oklch(0.85 0.17 88);           /* taxi amber/yellow */
+  --primary-foreground: oklch(0.15 0.02 90);
+  --accent: oklch(0.78 0.14 60);
+  --accent-foreground: oklch(0.15 0.02 90);
+  --border: oklch(1 0 0 / 8%);
+  --ring: oklch(0.85 0.17 88);
+
+  --telekom: oklch(0.62 0.24 350);   /* magenta */
+  --orange:  oklch(0.72 0.18 55);
+  --o2:      oklch(0.68 0.15 235);
+
+  --gradient-hero: radial-gradient(120% 80% at 50% 0%, oklch(0.28 0.05 90 / 0.5), transparent 60%),
+                   linear-gradient(180deg, oklch(0.12 0.01 260) 0%, oklch(0.14 0.01 260) 100%);
+  --gradient-amber: linear-gradient(135deg, oklch(0.88 0.18 92), oklch(0.75 0.19 65));
+  --shadow-amber: 0 20px 60px -20px oklch(0.85 0.17 88 / 0.45);
+  --shadow-card: 0 10px 40px -12px oklch(0 0 0 / 0.5);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+}
+
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.25'/></svg>");
+    mix-blend-mode: overlay;
+    opacity: 0.4;
+  }
+}
+
+@utility text-gradient-amber {
+  background: var(--gradient-amber);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility btn-amber {
+  background: var(--gradient-amber);
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-amber);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:hover { transform: translateY(-2px); box-shadow: 0 24px 70px -18px oklch(0.85 0.17 88 / 0.6); }
+  &:active { transform: translateY(0); }
+}
+
+@utility card-surface {
+  background: linear-gradient(180deg, oklch(0.22 0.012 260 / 0.9), oklch(0.17 0.01 260 / 0.9));
+  border: 1px solid oklch(1 0 0 / 0.06);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-card);
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 oklch(0.85 0.17 88 / 0.5); }
+  70% { box-shadow: 0 0 0 18px oklch(0.85 0.17 88 / 0); }
+  100% { box-shadow: 0 0 0 0 oklch(0.85 0.17 88 / 0); }
+}
+@utility pulse-ring { animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+
+@keyframes float-slow {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@utility float-slow { animation: float-slow 6s ease-in-out infinite; }
