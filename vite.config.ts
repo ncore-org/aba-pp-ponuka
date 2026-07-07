@@ -5,7 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   server: {
     entry: "server",
-    preset: "cloudflare",
+    preset: "static",
   },
   vite: {
     plugins: [
