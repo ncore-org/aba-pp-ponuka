@@ -34,10 +34,13 @@ jobs:
       - name: Build
         run: bun run build
 
+      - name: List output
+        run: ls -la dist/client/ 2>/dev/null || echo "checking dist..."; find dist -maxdepth 3 -type f 2>/dev/null | head -30
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .output/public
+          path: dist/client
 
   deploy:
     needs: build
